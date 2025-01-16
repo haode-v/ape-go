@@ -190,7 +190,16 @@ func processPools(db *sql.DB, poolsData interface{}) error {
 		return fmt.Errorf("failed to find 'pools' key or invalid format")
 	}
 
-	for pool := range pools {
+	for _, pool := range pools {
+		// 先打印池数据，看看它的结构
+		fmt.Printf("Processing pool: %+v\n", pool)
+
+		// 如果 pool 是一个数字，则跳过它
+		if _, ok := pool.(float64); ok {
+			fmt.Println("Skipping number type pool")
+			continue
+		}
+
 		poolBytes, err := json.Marshal(pool)
 		if err != nil {
 			return fmt.Errorf("failed to convert pool to JSON bytes: %w", err)
