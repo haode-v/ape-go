@@ -191,8 +191,6 @@ func processPools(db *sql.DB, poolsData interface{}) error {
 	}
 
 	for _, pool := range pools {
-		// 先打印池数据，看看它的结构
-		fmt.Printf("Processing pool: %+v\n", pool)
 
 		// 如果 pool 是一个数字，则跳过它
 		if _, ok := pool.(float64); ok {
